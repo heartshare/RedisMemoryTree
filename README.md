@@ -144,3 +144,10 @@ Redis持久化磁盘IO方式及其带来的问题
      
 </pre>
 
+<pre>
+Redis中的每个数据库，都由一个RedisDb的结构存储，其中RedisDb.id存储着数据库以整数表示的
+号码。RedisDb.dict存储着该库所有的键值对数据，RedisDb.expires保存着每一个键的过期时间。
+
+当Redis初始化时，会预先分配16个数据库，该数量可以通过配置文件修改。
+</pre>
+
