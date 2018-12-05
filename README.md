@@ -126,6 +126,19 @@ Redis的持久化机制
 </pre>
 
 <pre>
+redis中对于有设置过期的key有三种处理方式
+    被动删除：这个key下一次被访问到的时候才会删除。
+    主动删除：Redis会定期主动淘汰一批已过期的key
+    当前已用内存超过maxmemory限定时，触发主动清理策略
+
+    直接删除大key是有风险的，key过大，直接删除时会导致Redis阻塞，不同类型的大key有不同的删除方式，
+       1)Large Hash Key 可使用hscan命令，每次获取500个字段，再用hdel命令，每次删除1个字段。
+       2)Large Set Key 可使用sscan命令，每次扫描集合中500个元素，再用srem命令每次删除一个键。
+       3)Large List Key可通过ltrim命令每次删除少量元素
+       5)Large Sorted Set Key使用sortedset自带的zremrangebyrank命令,每次删除top 100个元素
+</pre>
+
+<pre>
 Redis持久化磁盘IO方式及其带来的问题
  
      
